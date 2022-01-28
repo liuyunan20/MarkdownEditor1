@@ -1,4 +1,4 @@
-formatters = "plain bold italic header link inline-code new-line".split()
+formatters = "plain bold italic header link inline-code new-line ordered-list unordered-list".split()
 command = None
 
 
@@ -37,16 +37,19 @@ def link():
     return f"[{label}]({url})"
 
 
-def ordered_list():
-    o_list = input("Ordered list(split with comma: ").split(",")
-    for i in range(len(o_list)):
-        o_list[i] = f"{i + 1}. {o_list[i]}\n"
-    return o_list
-
-
-def unordered_list():
-    u_list = input("Unordered list(split with comma: ").split(",")
-    return [f"*{element}\n" for element in u_list]
+def mark_down_list(type):
+    m_list = []
+    while True:
+        list_len = int(input("Number of rows: "))
+        if list_len > 0:
+            for i in range(list_len):
+                if type == "ordered-list":
+                    m_list.append(f"{i + 1}. " + input(f"Row #{i + 1}: ") + "\n")
+                elif type == "unordered-list":
+                    m_list.append("* " + input(f"Row #{i + 1}: ") + "\n")
+            return m_list
+        else:
+            print("The number of rows should be greater than zero")
 
 
 def new_line():
@@ -71,6 +74,10 @@ while True:
             mark_down_text.append(link())
         elif command == "new-line":
             mark_down_text.append(new_line())
+        elif command == "ordered-list" or command == "unordered-list":
+            my_list = mark_down_list(command)
+            mark_down_text = mark_down_text + my_list
+
         for t in mark_down_text:
             print(t, end="")
         print()
