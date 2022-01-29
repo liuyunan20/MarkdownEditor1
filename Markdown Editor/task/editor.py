@@ -56,6 +56,11 @@ def new_line():
     return "\n"
 
 
+def done(out_put):
+    with open("output.md", "w") as out_file:
+        out_file.writelines(out_put)
+
+
 mark_down_text = []
 while True:
     command = input("Choose a formatter: ").lower()
@@ -86,6 +91,7 @@ while True:
         print("Available formatters: plain bold italic header link inline-code ordered-list unordered-list new-line")
         print("Special commands: !help !done")
     elif command == "!done":
+        done(mark_down_text)
         break
     else:
         print("Unknown formatting type or command")
